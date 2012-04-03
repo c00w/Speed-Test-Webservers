@@ -10,9 +10,13 @@ if __name__ == "__main__":
     g_data = [x for x in int_wrap(gevent.readlines())]
     node = open('node.speed')
     n_data = [x for x in int_wrap(node.readlines())]
-    plt.plot(np.arange(len(g_data)), g_data, np.arange(len(n_data)), n_data)
+    nginx = open('nginx.speed')
+    ng_data = [x for x in int_wrap(nginx.readlines())]
     
-    plt.legend(('gevent', 'node'))
+    plt.plot(np.arange(len(g_data)), g_data, np.arange(len(n_data)), n_data,
+    np.arange(len(ng_data)), ng_data)
+    
+    plt.legend(('gevent', 'node', 'nginx'))
     
     plt.xlabel("Concurrent Users")
 
