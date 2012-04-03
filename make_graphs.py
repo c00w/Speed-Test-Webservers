@@ -12,11 +12,14 @@ if __name__ == "__main__":
     n_data = [x for x in int_wrap(node.readlines())]
     nginx = open('nginx.speed')
     ng_data = [x for x in int_wrap(nginx.readlines())]
-    
+    golang = open('golang.speed')
+    go_data = [x for x in int_wrap(golang.readlines())]
+        
     plt.plot(np.arange(len(g_data)), g_data, np.arange(len(n_data)), n_data,
-    np.arange(len(ng_data)), ng_data)
+    np.arange(len(ng_data)), ng_data,
+    np.arange(len(go_data)), go_data)
     
-    plt.legend(('gevent', 'node', 'nginx'))
+    plt.legend(('gevent', 'node', 'nginx', 'go'))
     
     plt.xlabel("Concurrent Users")
 
