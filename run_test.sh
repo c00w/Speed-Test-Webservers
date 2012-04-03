@@ -1,3 +1,10 @@
+rm golang.speed
+for i in {1..400..1}
+do 
+    echo $i
+    bash golang.sh $i | grep \#/sec | awk '{ print $4 }' >> golang.speed
+done
+
 rm node.speed
 for i in {1..400..1}
 do
@@ -18,3 +25,5 @@ do
     echo $i
     bash nginx.sh $i  | grep \#/sec  | awk '{ print $4 }' >> nginx.speed
 done
+
+
