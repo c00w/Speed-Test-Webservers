@@ -19,18 +19,19 @@ if __name__ == "__main__":
     warp = open('warp.speed')
     warp_data = [x for x in int_wrap(warp.readlines())]
         
-    plt.plot(np.arange(len(g_data)), g_data, np.arange(len(n_data)), n_data,
-    np.arange(len(ng_data)), ng_data,
-    np.arange(len(go_data)), go_data,
-    np.arange(len(snap_data)), snap_data,
-    np.arange(len(warp_data)), warp_data)
+    plt.plot(np.arange(1,len(g_data)*2+1,2), g_data, 
+    np.arange(1,len(n_data)*2+1,2), n_data,
+    np.arange(1,len(ng_data)*2+1,2), ng_data,
+    np.arange(1,len(go_data)*2+1,2), go_data,
+    np.arange(1,len(snap_data)*2+1,2), snap_data,
+    np.arange(1,len(warp_data)*2+1,2), warp_data)
     
     plt.legend(('gevent', 'node', 'nginx', 'go', 'snap', 'warp'))
     
-    plt.xlabel("Concurrent Users")
+    plt.xlabel("Concurrent Connections")
 
     plt.ylabel("Requests Per Second")
     
-    plt.title("Node and Gevent speed with 2,000 Requests")
+    plt.title("Webserver speed with 5,000 Requests")
     
     plt.savefig('output.png')

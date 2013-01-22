@@ -8,9 +8,8 @@ node node_test.js & # 8124
 snaptest -p 9998 & # 9998
 ./warptest & # 3000
 
-sleep 1
-#FILES="golang.speed node.speed gevent.speed nginx.speed snap.speed warp.speed"
-FILES="warp.speed "
+sleep 5
+FILES="golang.speed node.speed gevent.speed nginx.speed snap.speed warp.speed"
 declare -A PORT
 PORT["golang.speed"]=9999 
 PORT["node.speed"]=8124
@@ -21,9 +20,10 @@ PORT["warp.speed"]=3000
 
 for FILE in $FILES;
 do
+    sleep 5
     rm $FILE
     echo $FILE
-    for i in {1..100..1}
+    for i in {1..255..2}
     do
         sleep 0.1
         echo $i
@@ -31,4 +31,13 @@ do
     done
 done
 
-trap "kill 0" SIGINT SIGTERM EXIT
+cleanexit() {
+    kill $(ps aux | grep "python2 start_gevent.py" | awk '{print $2}')
+    kill $(ps aux | grep "go run main.go" | awk '{print $2}')
+    sudo systemctl stop nginx # 80
+    kill $(ps aux | grep "node node_test.js" | awk '{print $2}')
+    kill $(ps aux | grep "snaptest -p 9998" | awk '{print $2}')
+    kill $(ps aux | grep "./warptest" | awk '{print $2}')
+}
+
+trap cleanexit EXIT SIGTERM SIGKILL SIGQUIT
